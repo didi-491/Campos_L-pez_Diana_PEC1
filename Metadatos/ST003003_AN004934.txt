@@ -1,0 +1,136 @@
+#METABOLOMICS WORKBENCH RDOKO28_20231213_070552 DATATRACK_ID:4507 STUDY_ID:ST003003 ANALYSIS_ID:AN004934 PROJECT_ID:PR001872
+VERSION             	1
+CREATED_ON             	December 13, 2023, 9:00 pm
+#PROJECT
+PR:PROJECT_TITLE                 	Gut microbiota and metabolites in estrus cycle and their changes in a menopausal
+PR:PROJECT_TITLE                 	transition rat model with typical neuroendocrine aging
+PR:PROJECT_SUMMARY               	Neuroendocrine alterations in the mid-life hypothalamus coupled with
+PR:PROJECT_SUMMARY               	reproductive decline herald the initiation of menopausal transition. The certain
+PR:PROJECT_SUMMARY               	feature and contribution of gut microflora and metabolites to neuroendocrine
+PR:PROJECT_SUMMARY               	changes in the menopausal transition remain largely unknown. Fecal samples of
+PR:PROJECT_SUMMARY               	rats experiencing different reproductive stages were collected and processed for
+PR:PROJECT_SUMMARY               	16S rRNA and liquid chromatography-mass spectrometry sequencing. The differences
+PR:PROJECT_SUMMARY               	of gut microbiota and metabolites between young and middle-aged rats during
+PR:PROJECT_SUMMARY               	proestrus and diestrus were analyzed and their relationships to neuroendocrine
+PR:PROJECT_SUMMARY               	aging were then examined. This study documents specific gut microbial
+PR:PROJECT_SUMMARY               	composition changes and concomitant shifting trends of metabolites during
+PR:PROJECT_SUMMARY               	menopausal transition, which may initiate the gut-brain dysfunction in
+PR:PROJECT_SUMMARY               	neuroendocrine aging.
+PR:INSTITUTE                     	Fudan University
+PR:LAST_NAME                     	Dai
+PR:FIRST_NAME                    	Ruoxi
+PR:ADDRESS                       	128 Shenyang Road
+PR:EMAIL                         	rqdai21@m.fudan.edu.cn
+PR:PHONE                         	+86-21-33189900
+#STUDY
+ST:STUDY_TITLE                   	Gut microbiota and metabolites in estrus cycle and their changes in a menopausal
+ST:STUDY_TITLE                   	transition rat model with typical neuroendocrine aging
+ST:STUDY_SUMMARY                 	Neuroendocrine alterations in the mid-life hypothalamus coupled with
+ST:STUDY_SUMMARY                 	reproductive decline herald the initiation of menopausal transition. The certain
+ST:STUDY_SUMMARY                 	feature and contribution of gut microflora and metabolites to neuroendocrine
+ST:STUDY_SUMMARY                 	changes in the menopausal transition remain largely unknown. Fecal samples of
+ST:STUDY_SUMMARY                 	rats experiencing different reproductive stages were collected and processed for
+ST:STUDY_SUMMARY                 	16S rRNA and liquid chromatography-mass spectrometry sequencing. The differences
+ST:STUDY_SUMMARY                 	of gut microbiota and metabolites between young and middle-aged rats during
+ST:STUDY_SUMMARY                 	proestrus and diestrus were analyzed and their relationships to neuroendocrine
+ST:STUDY_SUMMARY                 	aging were then examined. This study documents specific gut microbial
+ST:STUDY_SUMMARY                 	composition changes and concomitant shifting trends of metabolites during
+ST:STUDY_SUMMARY                 	menopausal transition, which may initiate the gut-brain dysfunction in
+ST:STUDY_SUMMARY                 	neuroendocrine aging.
+ST:INSTITUTE                     	Fudan University
+ST:LAST_NAME                     	Dai
+ST:FIRST_NAME                    	Ruoxi
+ST:ADDRESS                       	128 Shenyang Road
+ST:EMAIL                         	rqdai21@m.fudan.edu.cn
+ST:PHONE                         	+86-21-33189900
+#SUBJECT
+SU:SUBJECT_TYPE                  	Mammal
+SU:SUBJECT_SPECIES               	Rattus norvegicus
+SU:TAXONOMY_ID                   	10116
+#SUBJECT_SAMPLE_FACTORS:         	SUBJECT(optional)[tab]SAMPLE[tab]FACTORS(NAME:VALUE pairs separated by |)[tab]Raw file names and additional sample data
+SUBJECT_SAMPLE_FACTORS           	-	MA1	Age:9-10 months | Estrus Stage:Proestrus	RAW_FILE_NAME=MA1-neg.raw; RAW_FILE_NAME=MA1-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA4	Age:9-10 months | Estrus Stage:Proestrus	RAW_FILE_NAME=MA4-neg.raw; RAW_FILE_NAME=MA4-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA6	Age:9-10 months | Estrus Stage:Proestrus	RAW_FILE_NAME=MA6-neg.raw; RAW_FILE_NAME=MA6-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA7	Age:9-10 months | Estrus Stage:Proestrus	RAW_FILE_NAME=MA7-neg.raw; RAW_FILE_NAME=MA7-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA13	Age:9-10 months | Estrus Stage:Proestrus	RAW_FILE_NAME=MA13-neg.raw; RAW_FILE_NAME=MA13-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA26	Age:9-10 months | Estrus Stage:Proestrus	RAW_FILE_NAME=MA26-neg.raw; RAW_FILE_NAME=MA26-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA34	Age:9-10 months | Estrus Stage:Proestrus	RAW_FILE_NAME=MA34-neg.raw; RAW_FILE_NAME=MA34-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA5	Age:9-10 months | Estrus Stage:Diestrus	RAW_FILE_NAME=MA5-neg.raw; RAW_FILE_NAME=MA5-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA25	Age:9-10 months | Estrus Stage:Diestrus	RAW_FILE_NAME=MA25-neg.raw; RAW_FILE_NAME=MA25-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA28	Age:9-10 months | Estrus Stage:Diestrus	RAW_FILE_NAME=MA28-neg.raw; RAW_FILE_NAME=MA28-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA17	Age:9-10 months | Estrus Stage:Diestrus	RAW_FILE_NAME=MA17-neg.raw; RAW_FILE_NAME=MA17-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	MA21	Age:9-10 months | Estrus Stage:Diestrus	RAW_FILE_NAME=MA21-neg.raw; RAW_FILE_NAME=MA21-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y7	Age:2-3 months | Estrus Stage:Proestrus	RAW_FILE_NAME=Y7-neg.raw; RAW_FILE_NAME=Y7-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y9	Age:2-3 months | Estrus Stage:Proestrus	RAW_FILE_NAME=Y9-neg.raw; RAW_FILE_NAME=Y9-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y13	Age:2-3 months | Estrus Stage:Proestrus	RAW_FILE_NAME=Y13-neg.raw; RAW_FILE_NAME=Y13-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y5	Age:2-3 months | Estrus Stage:Proestrus	RAW_FILE_NAME=Y5-neg.raw; RAW_FILE_NAME=Y5-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y8	Age:2-3 months | Estrus Stage:Proestrus	RAW_FILE_NAME=Y8-neg.raw; RAW_FILE_NAME=Y8-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y1	Age:2-3 months | Estrus Stage:Diestrus	RAW_FILE_NAME=Y1-neg.raw; RAW_FILE_NAME=Y1-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y3	Age:2-3 months | Estrus Stage:Diestrus	RAW_FILE_NAME=Y3-neg.raw; RAW_FILE_NAME=Y3-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y4	Age:2-3 months | Estrus Stage:Diestrus	RAW_FILE_NAME=Y4-neg.raw; RAW_FILE_NAME=Y4-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y6	Age:2-3 months | Estrus Stage:Diestrus	RAW_FILE_NAME=Y6-neg.raw; RAW_FILE_NAME=Y6-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y10	Age:2-3 months | Estrus Stage:Diestrus	RAW_FILE_NAME=Y10-neg.raw; RAW_FILE_NAME=Y10-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	Y14	Age:2-3 months | Estrus Stage:Diestrus	RAW_FILE_NAME=Y14-neg.raw; RAW_FILE_NAME=Y14-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	QC1	Age:control | Estrus Stage:control	RAW_FILE_NAME=QC1-neg.raw; RAW_FILE_NAME=QC1-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	QC2	Age:control | Estrus Stage:control	RAW_FILE_NAME=QC2-neg.raw; RAW_FILE_NAME=QC2-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	QC3	Age:control | Estrus Stage:control	RAW_FILE_NAME=QC3-neg.raw; RAW_FILE_NAME=QC3-pos.raw
+SUBJECT_SAMPLE_FACTORS           	-	QC4	Age:control | Estrus Stage:control	RAW_FILE_NAME=QC4-neg.raw; RAW_FILE_NAME=QC4-pos.raw
+#COLLECTION
+CO:COLLECTION_SUMMARY            	Young (Y; 2-3-month-old) and middle-aged (MA; 9-10-month-old, retired breeders)
+CO:COLLECTION_SUMMARY            	female rats (Sprague Dawley, Charles River, Beijing) were fed with
+CO:COLLECTION_SUMMARY            	radiation-sterilized lab rodent feed (number 1010086; Jiangsu Xietong
+CO:COLLECTION_SUMMARY            	Pharmaceutical Bio-engineering Co., Ltd.) and water ad libitum. A 12-hour
+CO:COLLECTION_SUMMARY            	light/12-hour dark cycle (lights on at 8 a.m.) and the room temperature at 23℃
+CO:COLLECTION_SUMMARY            	was held. Estrous periodicity was detected by vaginal smear for at least
+CO:COLLECTION_SUMMARY            	consecutive two cycles (ten days). Only rats in possession of two regular
+CO:COLLECTION_SUMMARY            	estrous periods (four to five days) were included for the subsequent assays. On
+CO:COLLECTION_SUMMARY            	the basis of age and estrous stage, the rats were assigned to one of the
+CO:COLLECTION_SUMMARY            	following subgroups respectively: young, proestrus and diestrus (Y-P and Y-D);
+CO:COLLECTION_SUMMARY            	middle-aged, proestrus and diestrus (MA-P and MA-D). All fecal specimens were
+CO:COLLECTION_SUMMARY            	harvested and quickly chilled in liquid nitrogen and finally transferred to
+CO:COLLECTION_SUMMARY            	-80°C refrigerator for subsequent experiments.
+CO:SAMPLE_TYPE                   	Feces
+#TREATMENT
+TR:TREATMENT_SUMMARY             	Young (Y; 2-3-month-old) and middle-aged (MA; 9-10-month-old, retired breeders)
+TR:TREATMENT_SUMMARY             	female rats (Sprague Dawley, Charles River, Beijing) were fed with
+TR:TREATMENT_SUMMARY             	radiation-sterilized lab rodent feed (number 1010086; Jiangsu Xietong
+TR:TREATMENT_SUMMARY             	Pharmaceutical Bio-engineering Co., Ltd.) and water ad libitum. A 12-hour
+TR:TREATMENT_SUMMARY             	light/12-hour dark cycle (lights on at 8 a.m.) and the room temperature at 23℃
+TR:TREATMENT_SUMMARY             	was held. Estrous periodicity was detected by vaginal smear for at least
+TR:TREATMENT_SUMMARY             	consecutive two cycles (ten days). Only rats in possession of two regular
+TR:TREATMENT_SUMMARY             	estrous periods (four to five days) were included for the subsequent assays. On
+TR:TREATMENT_SUMMARY             	the basis of age and estrous stage, the rats were assigned to one of the
+TR:TREATMENT_SUMMARY             	following subgroups respectively: young, proestrus and diestrus (Y-P and Y-D);
+TR:TREATMENT_SUMMARY             	middle-aged, proestrus and diestrus (MA-P and MA-D).
+#SAMPLEPREP
+SP:SAMPLEPREP_SUMMARY            	The fecal samples weighed 60 mg were transferred to 1.5-mL EP tubes with
+SP:SAMPLEPREP_SUMMARY            	addition of 20 μL L-2-chlorophenylalanine (0.3 mg/mL) and 20 μL Lyso PC17:0
+SP:SAMPLEPREP_SUMMARY            	(0.01 mg/ml) in methanol and 600 μL methanol/water, 4:1 (v/v). After pre-cooled
+SP:SAMPLEPREP_SUMMARY            	at -20℃ for 2 min, the samples were ground at 60 Hz for 2 min by steel beads,
+SP:SAMPLEPREP_SUMMARY            	sonicated for 10 min and centrifuged for 10 min at 13,000 rpm, 4℃ following
+SP:SAMPLEPREP_SUMMARY            	standing still at -20℃ for 30 min. 300 μL of supernatants were dried and then
+SP:SAMPLEPREP_SUMMARY            	resolved in 400 μL methanol/water, 1:4 (v/v). The mixtures were vortexed for 30
+SP:SAMPLEPREP_SUMMARY            	s, sonicated for 2 min and centrifuged at 13,000 rpm, 4℃ for 10 min. 150 μL
+SP:SAMPLEPREP_SUMMARY            	supernatant was aspirated with syringes and filtered through 0.22 μm organic
+SP:SAMPLEPREP_SUMMARY            	phase pinhole filters. The extracts were transferred to LC injection vials and
+SP:SAMPLEPREP_SUMMARY            	store at -80℃ until LC-MS analysis.
+#CHROMATOGRAPHY
+CH:CHROMATOGRAPHY_TYPE           	Reversed phase
+CH:INSTRUMENT_NAME               	Thermo Dionex Ultimate 3000
+CH:COLUMN_NAME                   	Waters ACQUITY UPLC HSS T3 (100 x 2.1mm,1.8um)
+CH:SOLVENT_A                     	100% water; 0.1%formic acid
+CH:SOLVENT_B                     	100% acetonitrile; 0.1%formic acid
+CH:FLOW_GRADIENT                 	0.35 mL/min: 5-20% B, 0-2 min; 20-25% B, 2-4 min; 25-60% B, 4-9 min; 60-100% B,
+CH:FLOW_GRADIENT                 	9-14 min; 100% B, 14-16 min; 100-5% B, 16-16.1 min; 5% B, 16.1-18.1 min
+CH:FLOW_RATE                     	0.35 mL/min
+CH:COLUMN_TEMPERATURE            	50
+#ANALYSIS
+AN:ANALYSIS_TYPE                 	MS
+#MS
+MS:INSTRUMENT_NAME               	Thermo Q Exactive Plus Orbitrap
+MS:INSTRUMENT_TYPE               	Orbitrap
+MS:MS_TYPE                       	ESI
+MS:ION_MODE                      	NEGATIVE
+MS:MS_COMMENTS                   	-
+MS:MS_RESULTS_FILE               	ST003003_AN004934_Results.txt	UNITS:Peak area	Has m/z:Yes	Has RT:Yes	RT units:Minutes
+#END

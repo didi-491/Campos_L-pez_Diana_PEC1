@@ -1,0 +1,266 @@
+---
+title: "Análisis de Datos Ómicos - PEC1"
+author: "Diana Campos López"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    code_folding: hide
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Resumen 
+
+Este trabajo tiene como objetivo explorar y analizar los datos de un experimento metabolómico utilizando el objeto SummarizedExperiment (SE) en R. El estudio seleccionado investiga la relación entre los metabolitos de la microbiota intestinal y los cambios neuroendocrinos en la transición a la menopausia. Se procesaron los datos de 12 muestras de ratonas, con metabolitos obtenidos por cromatografía líquida acoplada a espectrometría de masas (LC-MS). Se realizaron análisis de normalización, componentes principales (PCA) y mapas de calor. Los resultados mostraron una separación entre muestras según la edad de las ratonas, aunque la falta de datos completos impidió una interpretación más detallada. 
+
+# Objetivos
+El objetivo principal de este trabajo es explorar y analizar los datos de un experimento seleccionado en una base de datos de metabolómica utilizando para ello un objeto SummarizedExperiment (SE). Este objetivo puede desglosarse en:
+a)	Importación de los datos y creación del objeto SE
+b)	Análisis de los datos y procesamiento de los datos
+c)	Interpretación biológica de los resultados obtenidos
+
+
+# Dependencies
+
+```{r, message=FALSE, warning=FALSE}
+library(SummarizedExperiment)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(DESeq2)
+library(pheatmap)
+library(FactoMineR)
+library(factoextra)
+
+```
+
+# Importación de los archivos y creación del objeto SA
+
+Para realizar este trabajo he buscado en el repositorio Metabolomics Workbench la palabra clave “microbiota” debido a que este tema me resulta altamente interesante y útil debido a la compleja relación que ocurre entre estas bacterias, hongos y virus con el resto del organismo en el que se alojan.
+
+A continuación, para seleccionar uno de los experimentos me fijé en el número de muestras que se habían analizado con el fin de obtener un número suficientemente alto como para que el estudio resulte interesante pero no tan alto como para que me suponga problemas por la capacidad de mi ordenador. 
+
+Por estas razones he seleccionado el estudio ST003003, llamado “Gut microbiota and metabolites in estrus cycle and their changes in a menopausal transition rat model with typical neuroendocrine aging” (Dai et al., 2023). El objetivo de este proyecto es estudiar la relación entre los metabolitos de la microbiota para asociarla con los cambios en el hipotálamo relacionados con la transición a la menopausia. Este tema me parece de vital importancia dado que la microbiota intestinal desempeña un papel clave en la modulación del eje intestino-cerebro y su impacto en la menopausia no ha sido muy estudiado.
+
+Este experimento se ha realizado sobre 27 ratonas divididas en 3 grupos: 
+
+-	QC: Controles
+-	Y: ratonas jóvenes, entre 2 y 3 meses de vida
+-	MA: ratones de edad media, entre 9 y 10 meses de vida
+
+A su vez, estos podían dividirse en proestrus (fase previa al celo) y diestrus (fase posterior al celo) según en la fase del ciclo estral en la que se encuentran. Estas fases son relevantes porque la fluctuación hormonal podría influir en los metabolitos presentes en la microbiota intestinal. Se realizó un análisis de metabolitos con una cromatografía líquida acoplada a un espectrómetro de masas (LC-MS). 
+
+Para trabajar con estos datos el primer paso ha consistido en importarlos al entorno de R y unir los archivos “ST003003_AN004933_results.txt” y “ST003003_AN004934_results.txt” correspondientes con los resultados de la LC-MS en modo positivo y negativo respectivamente. Estos archivos están compuestos por 13 columnas, 12 correspondientes a las distintas muestras de ratonas y una correspondiente al nombre del metabolito que se ha analizado.
+
+```{r, warning=FALSE, message=FALSE}
+# Definimos la ruta de los archivos
+data_path <- "D:/didic/Documents/Documentos/Master UOC/Cuatri 2/-ómicas/PEC1"
+
+# Cargamos los datos
+path_r1 <- file.path(data_path, "ST003003_AN004933_Results.txt")
+r_1 <- read_delim(path_r1, delim = "\t", col_names = T)
+
+path_r2 <- file.path(data_path, "ST003003_AN004934_Results.txt")
+r_2 <- read_delim(path_r2, delim = "\t", col_names = T)
+
+merged_r <- bind_rows(r_1, r_2)
+
+
+m1_path <- file.path(data_path, "ST003003_AN004933.txt")
+m1_info <- read_delim(m1_path, delim = "\t", col_names = F)
+
+m2_path <- file.path(data_path, "ST003003_AN004934.txt")
+m2_info <- read_delim(m2_path, delim = "\t", col_names = F)
+
+metadata_info <- list(
+  "AN004933" = m1_info,
+  "AN004934" = m2_info
+)
+
+expr_matrix <- as.matrix(merged_r[, -1])  # Excluir la columna "ID"
+rownames(expr_matrix) <- merged_r$ID  # Usar ID como nombres de fila
+
+# Crear objeto SummarizedExperiment correctamente
+se <- SummarizedExperiment(
+  assays = list(counts = expr_matrix),  # Asegurarnos de que está en formato lista
+  metadata = metadata_info
+)
+```
+
+A continuación guardamos el objeto SE en formato .RDa para subirlo a gitHub.
+
+```{r}
+save(se, file = "summarized_experiment.Rda")
+```
+
+
+# Análisis exploratorio
+
+Podemos ver la estructura del SE simplemente imprimiendolo:
+
+```{r}
+se
+```
+
+```{r}
+print("Las dimensiones del summarized experiment son:")
+dim(se)
+
+```
+```{r}
+print("El nombre de las muestras son:")
+colnames(se)
+
+```
+
+Podemos acceder a los metadatos directamente. Para no sobrecargar el documento vamos a aaceder solo a las primeras lineas de cada archivo:
+
+```{r}
+head(metadata(se)$AN004933)  # Información del análisis positivo
+head(metadata(se)$AN004934)  # Información del análisis negativo
+
+```
+
+De la misma manera podemos ver las primeras filas de la matriz del ensayo, que muestra la cantidad de cada metabolito por muestra. 
+
+```{r}
+# Acceder a la matriz de datos dentro de assays
+expr_matrix <- assay(se, "counts")
+head(expr_matrix)  # Ver primeras filas
+
+```
+
+A continuación se van a realizar análisis gráficos. Cabe destacar que con las lineas `png()` y `dev.off()` se descarga directamente en nuestro ordenador la imagen, lo que facilita su importación a otros documentos. Esto lo he realizado pero lo he eliminado de este archivo para que se vean aquí mismo las gráficas 
+
+```{r}
+# Boxplot de valores de expresión/metabolitos
+par(las = 2) 
+boxplot(expr_matrix, main = "Distribución de valores por muestra", col = rainbow(ncol(expr_matrix)))
+```
+Como podemos ver en la gráfica, los datos requieren de una normalización ya que presentan una gran dispersión y un gran número de valores atípicos en la parte superior. Para poder realizar una comparación más acertada de los datos se ha realizado una normalización de los datos tipo logarítmica:
+
+
+```{r}
+# Extraemos la matriz de datos del SummarizedExperiment
+expr_matrix <- assays(se)[[1]]  
+
+# Aplicamos log-transformación (log2(x + 1))
+norm_matrix <- log2(expr_matrix + 1)
+
+# Añadimos los datos normalizados al SummarizedExperiment y comprobamos
+assays(se)$norm_counts <- norm_matrix
+assayNames(se) 
+
+```
+
+```{r}
+# Boxplot después de la normalización (usando "norm_counts")
+par(las = 2) 
+boxplot(assays(se)$norm_counts, 
+        main = "Valores normalizados (log2)", 
+        col = rainbow(ncol(norm_matrix)))
+
+```
+Podemos comprobar que la normalización ha sido efectiva ya que la escala del eje Y ha disminuido notablemente, indicando que la transformación ha reducido la amplitud de los valores extremos. Podemos observar que la media de metabolitos no varía entre las ratonas independientemente de su edad. Hay que normalizar los datos.
+
+Otro análisis muy util es la realización de un PCA:
+
+```{r}
+# Preparamos la matriz
+count_matrix <- assays(se)$counts
+pca_data <- t(count_matrix)
+
+# Ejecutamos PCA
+pca_result <- prcomp(pca_data, scale. = TRUE)
+var_exp <- round(100 * (pca_result$sdev^2 / sum(pca_result$sdev^2)), 2)
+
+# Convertimos en data frame
+pca_df <- as.data.frame(pca_result$x)
+pca_df$Sample <- rownames(pca_df) 
+
+# Graficamos
+
+ggplot(pca_df, aes(x = PC1, y = PC2, label = Sample)) +
+  geom_point(size = 4, color = "orchid2", alpha = 0.6) +
+  geom_text(vjust = -1, size = 3) +
+labs(title = "PCA de Datos Crudos",
+       x = paste0("PC1 (", var_exp[1], "%)"),
+       y = paste0("PC2 (", var_exp[2], "%)")) +
+  theme_minimal()
+  
+
+```
+
+```{r}
+# Extraemos los datos normalizados
+norm_matrix <- assays(se)$norm_counts
+pca_data <- t(norm_matrix)
+
+# Ejecutamos PCA
+pca_result <- prcomp(pca_data, scale. = TRUE)
+var_exp <- round(100 * (pca_result$sdev^2 / sum(pca_result$sdev^2)), 2)
+
+# Convertimos en data frame 
+pca_df <- as.data.frame(pca_result$x)
+pca_df$Sample <- rownames(pca_df)  # Añadir nombres de muestra
+
+# Graficar PCA
+ggplot(pca_df, aes(x = PC1, y = PC2, label = Sample)) +
+  geom_point(size = 4, color = "orchid2", alpha = 0.6) +
+  geom_text(vjust = -1, size = 3) +
+  labs(title = "PCA de Datos Normalizados",
+       x = paste0("PC1 (", var_exp[1], "%)"),
+       y = paste0("PC2 (", var_exp[2], "%)")) +
+  theme_minimal()
+
+
+```
+
+Podemos ver que los componentes principales (PC) solo recogen aproximadamente un 70% de los metabolitos. Además, podemos observar que en ambos PCA presentan una separación de las muestras según la edad. Esta dispersión podría estar relacionada con un efecto batch, es decir, diferencias técnicas introducidas por el procesamiento de las muestras en distintos momentos, aunque en el artículo no se cuenta con información detallada sobre la prevención del efecto batch de manera explícita. Esta diferencia también puede deberse simplemente por una diferencia en composición de metabolitos relacionada con la edad. Además, dentro de cada grupo existe una dispersión en el eje vertical que indica una diferencia dentro del grupo entre los componentes principales del grupo 2.
+
+
+
+```{r}
+heat_colors <- colorRampPalette(c("navy", "white", "red"))(100)
+
+pheatmap(norm_matrix, 
+         scale = "row",
+         clustering_distance_rows = "correlation",
+         clustering_distance_cols = "correlation",
+         clustering_method = "ward.D",
+         color = heat_colors,
+         main = "Heatmap de Datos Normalizados",
+         show_colnames = TRUE,  
+         show_rownames = FALSE)  
+
+```
+Por último, se realizó un mapa de calor sobre los datos normalizados, en el que se puede observar un patrón claro sobre la expresión de los metabolitos según la edad de los ratones. Aún así encontramos ciertas diferencias dentro de cada grupo. Por ejemplo, la muestra Y13 presenta un metabolito infra expresado en comparación a todas las demás muestras de su grupo. Esto también ocurre con la muestra MA7. 
+
+#	Discusión 
+El análisis de los datos de metabolómica en ratonas jóvenes y de mediana edad ha permitido observar patrones diferenciados en la expresión de metabolitos. Sin embargo, la falta de datos para los grupos de control y las ratonas en fase diestrus limita la posibilidad de extraer conclusiones sobre la influencia del ciclo estral en la composición metabólica de la microbiota intestinal.
+
+El PCA mostró una clara separación entre los grupos de edad en el eje principal (PC1), lo que sugiere diferencias metabólicas asociadas al envejecimiento. No obstante, dentro de cada grupo se observa una dispersión en el eje PC2, lo que indica que puede haber otros factores biológicos o técnicos influyendo en la variabilidad de los datos. Además, no se cuenta con información sobre el control del efecto batch, lo que podría estar introduciendo sesgos en la agrupación de las muestras.
+
+Otro punto relevante es que, tras la normalización, la dispersión de los datos se redujo, lo que sugiere que la variabilidad observada en los datos crudos estaba en parte influenciada por diferencias en la magnitud de los valores y no necesariamente por diferencias biológicas reales. Esto subraya la importancia de aplicar métodos de normalización adecuados en estudios de metabolómica.
+Para mejorar la interpretación biológica de los resultados, habría sido ideal contar con anotaciones metabólicas detalladas, ya que, el dataset provee la masa a la que el MS encontró el metabolito, pero no su nombre. Sin esto no se pueden hacer estudios sobre la agrupación de los metabolitos según sus propiedades físico-químicas ni realizar análisis de enriquecimiento que permitan relacionar estos metabolitos con rutas bioquímicas. 
+
+Aún así, se ha demostrado que la edad esta directamente relacionada con la presencia de ciertos metabolitos, lo que podría sugerir una alteración en el microbiota intestinal influenciado por el cambio hormonal relacionado con la edad.
+
+#	Conclusiones
+
+El objeto SummarizedExperiment ha demostrado ser una herramienta valiosa para el análisis de datos bioinformáticos de estudios propios o ajenos con gran versatilidad y capacidad para trabajar en múltiples dimensiones de datos. Considero que en el trabajo no se ha podido ver reflejado el todo el potencial de este tipo de objetos, que reside en su capacidad de almacenar distintos tipos de análisis siempre que estos tengan las mismas dimensiones, lo que permitiría acceder a todos estos análisis a través del mismo objeto y manejarlos simultáneamente. Por ejemplo, la eliminación de una muestra de los datos resultaría en su eliminación automática de todos los análisis relacionados, lo que simplifica la gestión de los datos a gran escala. 
+
+Aun así, las dos primeras partes del objetivo han sido cumplidas con el objeto SE: la importación de los datos, la creación del objeto SE y el análisis preliminar de los datos. Además, he podido realizar una interpretación biológica acorde a los datos, aunque incompleta debido a la falta de muestras y de una librería que permita acceder al nombre de los metabolitos en lugar de a su relación masa carga (m/z) obtenida por el espectrómetro de masas. 
+
+A pesar de estos obstáculos, el trabajo ha logrado proporcionar una comprensión más clara del análisis multivariante tanto a nivel biológico como computacional. He adquirido nuevas habilidades que considero muy valiosas para mi carrera profesional y que sin duda serán de gran utilidad en mi TFM. 
+
+
+
+
+
+
+
